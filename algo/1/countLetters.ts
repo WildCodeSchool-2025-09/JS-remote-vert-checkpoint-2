@@ -7,11 +7,21 @@ Exemples :
 * "aaaaabbbaa" et "a" -> 7
 * "bbacbaaa" et "c" -> 1
 * "bbcc" et "a" -> 0
+* 
+* Je parcours mon tableau de string
+* pour chaque lettre égale à ma letter je fais plus dans le letterCount. 
+* 
 */
 
 function countLetters(givenString: string, letter: string): number {
-  // Ton code ici !
-  return 0;
+  let letterCount = 0;
+  for (let i = 0; i < givenString.length; i++) {
+    if (givenString[i] === letter) {
+      letterCount++;
+    }
+  }
+
+  return letterCount;
 }
 
 export default countLetters;
