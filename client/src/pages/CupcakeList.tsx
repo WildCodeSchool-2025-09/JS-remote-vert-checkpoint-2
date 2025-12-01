@@ -1,15 +1,22 @@
 import { useEffect, useState } from "react";
 import Cupcake from "../components/Cupcake";
 
+interface Accessory {
+  id: number;
+  name: string;
+  slug: string;
+}
+
 function CupcakeList() {
   const [cupcakes, setCupcakes] = useState<Cupcake[]>([]);
+  const [accessories, setAccessories] = useState<Accessory[]>([]);
 
   // Step 1: get all cupcakes
 
   useEffect(() => {
     async function fetchCupcakes() {
       const response = await fetch("http://localhost:3310/api/cupcakes");
-      const cupcakes = await response.json();
+      const cupcakes: Cupcake[] = await response.json();
       console.log(cupcakes);
       setCupcakes(cupcakes);
     }
@@ -17,6 +24,15 @@ function CupcakeList() {
   }, []);
 
   // Step 3: get all accessories
+  useEffect(() => {
+    async function fetchAccessories() {
+      const response = await fetch("http://localhost:3310/api/accessories");
+      const accessories: Accessory[] = await response.json();
+      console.log(accessories);
+      setAccessories(accessories);
+    }
+    fetchAccessories();
+  }, []);
 
   // Step 5: create filter state
 
@@ -29,7 +45,14 @@ function CupcakeList() {
           Filter by{" "}
           <select id="cupcake-select">
             <option value="">---</option>
-            {/* Step 4: add an option for each accessory */}
+            {
+              /* Step 4: add an option for each accessory */
+              accessories.map((accessory) => (
+                <option key={accessory.id} value={accessory.slug}>
+                  {accessory.name}
+                </option>
+              ))
+            }
           </select>
         </label>
       </form>
