@@ -1,5 +1,4 @@
 // Import necessary modules from React and React Router
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router";
 
@@ -7,6 +6,8 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 
 import App from "./App";
 
+import { CupcakeProvider } from "./context/CupcakeContext";
+import CupcakeDetails from "./pages/CupcakeDetails";
 import CupcakeList from "./pages/CupcakeList";
 import Home from "./pages/Home";
 import Instructions from "./pages/Instructions";
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
         path: "/cupcakes",
         element: <CupcakeList />,
       },
+      {
+        path: "/cupcakes/:id",
+        element: <CupcakeDetails />,
+      },
     ],
   },
 ]);
@@ -42,7 +47,7 @@ if (rootElement == null) {
 
 // Render the app inside the root element
 createRoot(rootElement).render(
-  <StrictMode>
+  <CupcakeProvider>
     <RouterProvider router={router} />
-  </StrictMode>,
+  </CupcakeProvider>,
 );
