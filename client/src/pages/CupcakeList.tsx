@@ -1,15 +1,25 @@
 import { useEffect, useState } from "react";
 import Cupcake from "../components/Cupcake";
 
+type AccessoryArray = { id: number; name: string; slug: string }[];
+
 const CupcakeList = () => {
   const [cupcakes, setCupcakes] = useState<Cupcake[]>([]);
+  const [accessories, setAccessories] = useState<AccessoryArray>([]);
 
   useEffect(() => {
     fetch("http://localhost:3310/api/cupcakes")
       .then((res) => res.json())
       .then((data) => {
         setCupcakes(data);
-        console.log(data);
+        console.info(data);
+      })
+      .catch((err) => console.error(err));
+    fetch("http://localhost:3310/api/accessories")
+      .then((res) => res.json())
+      .then((data) => {
+        setAccessories(data as AccessoryArray);
+        console.info("Accessories:", data);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -23,7 +33,11 @@ const CupcakeList = () => {
           Filter by{" "}
           <select id="cupcake-select">
             <option value="">---</option>
-            {/* Step 4: add an option for each accessory */}
+            {accessories.map((accessorie) => (
+              <option key={accessorie.id} value={accessorie.slug}>
+                {accessorie.name}
+              </option>
+            ))}
           </select>
         </label>
       </form>
