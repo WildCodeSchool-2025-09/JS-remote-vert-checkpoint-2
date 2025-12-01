@@ -19,7 +19,7 @@ function Home() {
     <>
       <h1>Cupcake Union</h1>
       <div className="home-cupcake">
-        <Cupcake data={sampleData} />
+        <Cupcake cupcake={sampleData} />
       </div>
       <div className="home-content">
         <p>

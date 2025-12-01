@@ -1,31 +1,31 @@
 import "./Cupcake.css";
 
 interface CupcakeProps {
-  data: Cupcake;
+  cupcake: Cupcake;
 }
 
-function Cupcake({ data }: CupcakeProps) {
+function Cupcake({ cupcake }: CupcakeProps) {
   return (
     <div className="cupcake-container">
       <div className="cupcake">
-        <div className={`accessory ${data.accessory}`} />
+        <div className={`accessory ${cupcake.accessory}`} />
         <div className="cream">
           <div
             className="cream-1"
             style={{
-              backgroundColor: data.color1,
+              backgroundColor: cupcake.color1,
             }}
           />
           <div
             className="cream-2"
             style={{
-              backgroundColor: data.color2,
+              backgroundColor: cupcake.color2,
             }}
           />
           <div
             className="cream-3"
             style={{
-              backgroundColor: data.color3,
+              backgroundColor: cupcake.color3,
             }}
           />
         </div>
@@ -42,7 +42,7 @@ function Cupcake({ data }: CupcakeProps) {
         </div>
       </div>
 
-      <div className="cupcake-name">{data.name}</div>
+      <div className="cupcake-name">{cupcake.name}</div>
     </div>
   );
 }
