@@ -47,6 +47,13 @@ function CupcakeList() {
   }, []);
 
   // Step 3: get all accessories
+  const [accessories, setAccessories] = useState<AccessoryArray>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3310/api/accessories")
+      .then((res) => res.json())
+      .then((accessoriesData) => setAccessories(accessoriesData));
+  }, []);
 
   // Step 5: create filter state
 
@@ -60,6 +67,11 @@ function CupcakeList() {
           <select id="cupcake-select">
             <option value="">---</option>
             {/* Step 4: add an option for each accessory */}
+            {accessories.map((accessory) => (
+              <option key={accessory.id} value={accessory.id}>
+                {accessory.name}
+              </option>
+            ))}
           </select>
         </label>
       </form>
