@@ -1,6 +1,7 @@
 /*
 Notre équipe de football participe à un tournoi dans lequel elle a joué 10 matchs.
-Les résultats du match sont notés "3:0" : le premier chiffre est le nombre de buts de **notre** équipe ; le second est celui de l'autre équipe.
+Les résultats du match sont notés "3:0" : le premier chiffre est le nombre de buts de **notre** équipe ;
+ le second est celui de l'autre équipe.
 Pour connaître le score de notre équipe, nous suivons ces règles :
 - Victoire : 3pts
 - Nul : 1pt
@@ -11,8 +12,21 @@ Pour exemple, si ta fonction recevait le tableau ci-dessous en paramètre, tu de
 */
 
 function getPoints(results: string[]): number {
-  // Ton code ici !
-  return 0;
+  let result = 0;
+
+  for (const item of results) {
+    const [notreEquipeStr, equipeAdverseStr] = item.split(":");
+    const notreEquipe = Number(notreEquipeStr);
+    const equipeAdverse = Number(equipeAdverseStr);
+
+    if (notreEquipe > equipeAdverse) {
+      result += 3;
+    } else if (notreEquipe === equipeAdverse) {
+      result += 1;
+    }
+  }
+
+  return result;
 }
 
 export default getPoints;
