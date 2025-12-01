@@ -10,6 +10,7 @@ interface Accessory {
 function CupcakeList() {
   const [cupcakes, setCupcakes] = useState<Cupcake[]>([]);
   const [accessories, setAccessories] = useState<Accessory[]>([]);
+  const [selectedAccessory, setSelectedAccessory] = useState<string>("");
 
   // Step 1: get all cupcakes
 
@@ -36,6 +37,11 @@ function CupcakeList() {
 
   // Step 5: create filter state
 
+  const filteredCupcakes =
+    selectedAccessory === ""
+      ? cupcakes
+      : cupcakes.filter((cupcake) => cupcake.accessory === selectedAccessory);
+
   return (
     <>
       <h1>My cupcakes</h1>
@@ -43,7 +49,11 @@ function CupcakeList() {
         <label htmlFor="cupcake-select">
           {/* Step 5: use a controlled component for select */}
           Filter by{" "}
-          <select id="cupcake-select">
+          <select
+            id="cupcake-select"
+            value={selectedAccessory}
+            onChange={(event) => setSelectedAccessory(event.target.value)}
+          >
             <option value="">---</option>
             {
               /* Step 4: add an option for each accessory */
@@ -56,10 +66,11 @@ function CupcakeList() {
           </select>
         </label>
       </form>
+
       <ul className="cupcake-list" id="cupcake-list">
         {
           /* Step 2: repeat this block for each cupcake */
-          cupcakes.map((cupcake) => (
+          filteredCupcakes.map((cupcake) => (
             /* Step 5: filter cupcakes before repeating */
             <li className="cupcake-item" key={cupcake.id}>
               <Cupcake data={cupcake} />
