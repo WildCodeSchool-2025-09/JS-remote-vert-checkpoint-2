@@ -1,6 +1,6 @@
+import { useState, useEffect } from "react";
 import Cupcake from "../components/Cupcake";
 
-/* ************************************************************************* */
 const sampleCupcakes: CupcakeArray = [
   {
     id: 10,
@@ -31,37 +31,66 @@ const sampleCupcakes: CupcakeArray = [
   },
 ];
 
-/* you can use sampleCupcakes if you're stucked on step 1 */
-/* if you're fine with step 1, just ignore this ;) */
-/* ************************************************************************* */
-
 function CupcakeList() {
-  // Step 1: get all cupcakes
+  const [cupcakes, setCupcakes] = useState<CupcakeArray>(sampleCupcakes);
+  const [accessories, setAccessories] = useState<string[]>([]);
+  const [filter, setFilter] = useState("");
 
-  // Step 3: get all accessories
+  useEffect(() => {
+    fetch("http://localhost:3310/api/cupcakes")
+      .then((res) => res.json())
+      .then((data) => {
+        console.info(data);
+        setCupcakes(data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
-  // Step 5: create filter state
+  useEffect(() => {
+    fetch("http://localhost:3310/api/accessories")
+      .then((res) => res.json())
+      .then((data) => {
+        console.info("Accessoires récupérés :", data);
+        setAccessories(data);
+      })
+      .catch((err) => console.error("Erreur API accessoires :", err));
+  }, []);
+
+  const displayedCupcakes = filter
+    ? cupcakes.filter((cupcake) => cupcake.accessory === filter)
+    : cupcakes;
 
   return (
     <>
       <h1>My cupcakes</h1>
+
       <form className="center">
         <label htmlFor="cupcake-select">
-          {/* Step 5: use a controlled component for select */}
-          Filter by{" "}
-          <select id="cupcake-select">
+          Filter by accessory{" "}
+          <select
+            id="cupcake-select"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+          >
             <option value="">---</option>
-            {/* Step 4: add an option for each accessory */}
+            <option value="wcs">Wild</option>
+            <option value="christmas-candy">Christmas Candy</option>
+
+            {accessories.map((cupcakeAccessory) => (
+              <option key={cupcakeAccessory} value={cupcakeAccessory}>
+                {cupcakeAccessory}
+              </option>
+            ))}
           </select>
         </label>
       </form>
-      <ul className="cupcake-list" id="cupcake-list">
-        {/* Step 2: repeat this block for each cupcake */}
-        {/* Step 5: filter cupcakes before repeating */}
-        <li className="cupcake-item">
-          <Cupcake data={sampleCupcakes[0]} />
-        </li>
-        {/* end of block */}
+
+      <ul className="cupcake-list">
+        {displayedCupcakes.map((cupcake) => (
+          <li key={cupcake.id} className="cupcake-item">
+            <Cupcake data={cupcake} />
+          </li>
+        ))}
       </ul>
     </>
   );
