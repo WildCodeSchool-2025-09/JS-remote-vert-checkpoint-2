@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Cupcake from "../components/Cupcake";
 
 /* ************************************************************************* */
@@ -36,7 +37,31 @@ const sampleCupcakes: CupcakeArray = [
 /* ************************************************************************* */
 
 function CupcakeList() {
+  type AccessoryArray = {
+    id: number;
+    name: string;
+    slug: string;
+  }[];
   // Step 1: get all cupcakes
+  const [cupcakes, setCupcakes] = useState([]);
+  const [accessories, setAccessories] = useState<AccessoryArray>([]);
+
+  useEffect(() => {
+    async function getCupcakes() {
+      const response = await fetch("http://localhost:3310/api/cupcakes");
+      const data = await response.json();
+      setCupcakes(data);
+    }
+    getCupcakes();
+
+    async function getAccessories() {
+      const response = await fetch("http://localhost:3310/api/accessories");
+      const accessories = await response.json();
+      setAccessories(accessories);
+    }
+    getAccessories();
+  }, []);
+  console.info(accessories);
 
   // Step 3: get all accessories
 
@@ -56,7 +81,10 @@ function CupcakeList() {
         </label>
       </form>
       <ul className="cupcake-list" id="cupcake-list">
-        {/* Step 2: repeat this block for each cupcake */}
+        {cupcakes.map((cupcake: Cupcake) => {
+          return <Cupcake key={cupcake.id} data={cupcake} />;
+        })}
+        {/* Step 2: repeat this block for each cupcake 
         {/* Step 5: filter cupcakes before repeating */}
         <li className="cupcake-item">
           <Cupcake data={sampleCupcakes[0]} />
