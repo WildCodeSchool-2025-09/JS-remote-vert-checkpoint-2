@@ -10,8 +10,14 @@ Exemples :
 */
 
 function countLetters(givenString: string, letter: string): number {
-  // Ton code ici !
-  return 0;
+  givenString.toLowerCase();
+  let result = 0;
+  for (let i = 0; i < givenString.length; i++) {
+    if (givenString[i] === letter) {
+      result++;
+    }
+  }
+  return result;
 }
 
 export default countLetters;
