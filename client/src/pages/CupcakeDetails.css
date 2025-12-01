@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.cupcake-infos {
+  display: flex;
+  gap: 30px;
+}
