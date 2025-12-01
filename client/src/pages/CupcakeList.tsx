@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Cupcake from "../components/Cupcake";
 
 /* ************************************************************************* */
@@ -35,9 +36,23 @@ const sampleCupcakes: CupcakeArray = [
 /* if you're fine with step 1, just ignore this ;) */
 /* ************************************************************************* */
 
+interface CupcakeArray extends Array<Cupcake> {}
+
 function CupcakeList() {
   // Step 1: get all cupcakes
+  const [cupCakes, setCupCakes] = useState<CupcakeArray>([]);
 
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/cupcakes`, {
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((CupCakes) => {
+        setCupCakes(CupCakes);
+      });
+  }, []);
   // Step 3: get all accessories
 
   // Step 5: create filter state
@@ -57,6 +72,16 @@ function CupcakeList() {
       </form>
       <ul className="cupcake-list" id="cupcake-list">
         {/* Step 2: repeat this block for each cupcake */}
+        {cupCakes && cupCakes.length > 0 ? (
+          cupCakes.map((cupcake) => (
+            <li key={cupcake.id} className="cupcake-item">
+              <Cupcake data={cupcake} />
+            </li>
+          ))
+        ) : (
+          <li>Chargement en cours...</li>
+        )}
+
         {/* Step 5: filter cupcakes before repeating */}
         <li className="cupcake-item">
           <Cupcake data={sampleCupcakes[0]} />
