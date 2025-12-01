@@ -1,6 +1,9 @@
 /*
-Écris une fonction avec deux paramètres. Ces paramètres sont des tableaux contenant des nombres **stockés sous forme de chaînes de caractères**.
-Ta fonction doit renvoyer **un** tableau, où chaque élément est la somme des éléments des deux arguments correspondants (c'est-à-dire : le premier élément du tableau résultat est égal au premier élément du premier paramètre plus le premier élément du deuxième paramètre) .
+Écris une fonction avec deux paramètres. Ces paramètres sont des tableaux contenant des nombres
+ **stockés sous forme de chaînes de caractères**.
+Ta fonction doit renvoyer **un** tableau, où chaque élément est la somme des éléments des deux arguments correspondants
+ (c'est-à-dire : le premier élément du tableau résultat est égal au premier élément du premier paramètre plus le premier élément
+  du deuxième paramètre) .
 Remarque : Si un élément est vide, il doit compter pour 0.
 Ex:
 sumArr( ["1", "2", "3"], ["2", "4", "1"] ) should return ["3", "6", "4"]
@@ -10,8 +13,16 @@ sumArr( ["2", "5", "3"], ["2", "4", "9", "5", "5"] ) should return ["4", "9", "1
 */
 
 function sumArr(arrayA: string[], arrayB: string[]): string[] {
-  // Ton code ici !
-  return [];
+  const maxLength = Math.max(arrayA.length, arrayB.length);
+  const result: string[] = [];
+
+  for (let i = 0; i < maxLength; i++) {
+    const valueA = Number(arrayA[i] ?? 0);
+    const valueB = Number(arrayB[i] ?? 0);
+    result.push(String(valueA + valueB));
+  }
+
+  return result;
 }
 
 export default sumArr;
