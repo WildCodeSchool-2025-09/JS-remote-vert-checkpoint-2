@@ -21,5 +21,4 @@ function countLetters(givenString: string, letter: string): number {
   return count;
 }
 
-
 export default countLetters;
