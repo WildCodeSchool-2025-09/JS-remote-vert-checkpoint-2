@@ -15,7 +15,6 @@ function sumArr(arrayA: string[], arrayB: string[]): string[] {
   const arrayBInteger = arrayB.map((element) => Number(element));
   const arrayLength =
     arrayA.length >= arrayB.length ? arrayA.length : arrayB.length;
-  console.log(arrayAInteger);
 
   for (let i = 0; i < arrayLength; i++) {
     resultArray.push(
