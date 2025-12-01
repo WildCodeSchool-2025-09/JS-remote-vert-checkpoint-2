@@ -8,4 +8,11 @@ type CupcakeType = {
   name: string;
 };
 
-export type CupcakeArray = Cupcake[];
+type AccessoryType = {
+  id: number;
+  name: string;
+  slug: string;
+};
+
+export type CupcakeArray = CupcakeType[];
+export type AccessoryArray = AccessoryType[];

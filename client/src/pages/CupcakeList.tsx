@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Cupcake from "../components/Cupcake";
-import type { CupcakeType } from "../types/index";
+import type { AccessoryType, CupcakeType } from "../types/index";
 
 /* ************************************************************************* */
 /*const sampleCupcakes: CupcakeArray = [
@@ -39,6 +39,7 @@ import type { CupcakeType } from "../types/index";
 
 function CupcakeList() {
   const [cupcakes, setCupcakes] = useState<CupcakeType[]>([]);
+  const [accessories, setAccessories] = useState<AccessoryType[]>([]);
 
   useEffect(() => {
     fetch("http://localhost:3310/api/cupcakes")
@@ -46,6 +47,15 @@ function CupcakeList() {
       .then((cupcakesData) => {
         setCupcakes(cupcakesData);
         console.info(cupcakesData);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:3310/api/accessories")
+      .then((response) => response.json())
+      .then((accessoriesData) => {
+        setAccessories(accessoriesData);
+        console.info(accessoriesData);
       });
   }, []);
 
@@ -62,7 +72,11 @@ function CupcakeList() {
           Filter by{" "}
           <select id="cupcake-select">
             <option value="">---</option>
-            {/* Step 4: add an option for each accessory */}
+            {accessories.map((accessory) => (
+              <option key={accessory.id} value={accessory.id}>
+                {accessory.name}
+              </option>
+            ))}
           </select>
         </label>
       </form>
