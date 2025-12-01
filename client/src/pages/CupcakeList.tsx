@@ -37,11 +37,13 @@ const sampleCupcakes: CupcakeArray = [
 /* ************************************************************************* */
 
 interface CupcakeArray extends Array<Cupcake> {}
+type AccessoryArray = { id: number; name: string; slug: string }[];
 
 function CupcakeList() {
-  // Step 1: get all cupcakes
   const [cupCakes, setCupCakes] = useState<CupcakeArray>([]);
+  const [accessories, setAccessories] = useState<AccessoryArray>([]);
 
+  // Step 1: get all cupcakes
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/cupcakes`, {
       headers: {
@@ -54,6 +56,17 @@ function CupcakeList() {
       });
   }, []);
   // Step 3: get all accessories
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/accessories`, {
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((accessories) => {
+        setAccessories(accessories);
+      });
+  }, []);
 
   // Step 5: create filter state
 
@@ -67,6 +80,13 @@ function CupcakeList() {
           <select id="cupcake-select">
             <option value="">---</option>
             {/* Step 4: add an option for each accessory */}
+            {accessories &&
+              accessories.length > 0 &&
+              accessories.map((accessory) => (
+                <option key={accessory.id} value={accessory.slug}>
+                  {accessory.name}
+                </option>
+              ))}
           </select>
         </label>
       </form>
