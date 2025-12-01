@@ -52,7 +52,6 @@ function CupcakeList() {
       .then((accessory) => setCupcakeAccesories(accessory));
   }, []);
 
-  console.log(cupcakeAccesories);
   // Step 5: create filter state
 
   return (
@@ -63,8 +62,11 @@ function CupcakeList() {
           {/* Step 5: use a controlled component for select */}
           Filter by{" "}
           <select id="cupcake-select">
-            <option value="">---</option>
-            {/* Step 4: add an option for each accessory */}
+            {cupcakeAccesories?.map((accessory) => (
+              <option value={accessory.slug} key={accessory.id}>
+                {accessory.name}
+              </option>
+            ))}
           </select>
         </label>
       </form>
