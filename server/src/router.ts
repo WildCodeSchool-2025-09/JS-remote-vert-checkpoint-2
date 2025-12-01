@@ -3,27 +3,27 @@ import express from "express";
 const router = express.Router();
 
 export const cupcakes = [
-	{
-		id: 1,
-		name: "Austria",
-		accessory: "chocolate",
-		color1: "red",
-		color2: "white",
-		color3: "red",
-	},
-	{
-		id: 2,
-		name: "Belgium",
-		accessory: "chocolate",
-		color1: "black",
-		color2: "yellow",
-		color3: "red",
-	},
+  {
+    id: 1,
+    name: "Austria",
+    accessory: "chocolate",
+    color1: "red",
+    color2: "white",
+    color3: "red",
+  },
+  {
+    id: 2,
+    name: "Belgium",
+    accessory: "chocolate",
+    color1: "black",
+    color2: "yellow",
+    color3: "red",
+  },
 ];
 
 /* ************************************************************************* */
 router.get("/api/cupcakes", (req, res) => {
-	res.json(cupcakes);
+  res.json(cupcakes);
 });
 /* ************************************************************************* */
 
