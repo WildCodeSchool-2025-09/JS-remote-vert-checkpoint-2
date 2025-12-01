@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import Cupcake from "../components/Cupcake";
+import type {Accessory, AccessoryArray, CupcakeArray } from "../types";
 
 /* ************************************************************************* */
 const sampleCupcakes: CupcakeArray = [
@@ -36,32 +38,68 @@ const sampleCupcakes: CupcakeArray = [
 /* ************************************************************************* */
 
 function CupcakeList() {
-  // Step 1: get all cupcakes
+  const [cupcakes, setCupcakes] = useState<Cupcake[]>([]);
 
-  // Step 3: get all accessories
+  useEffect(() => {
+    fetch("http://localhost:3310/api/cupcakes")
+      .then((response) => response.json())
+      .then((data) => {
+        console.info("ça marche billyboy");
+        setCupcakes(data);
+      })
+      .catch((error) => console.error("Error fetching cupcakes:", error));
+  }, []);
+  const [accessories, setAccessories] = useState<AccessoryArray>([]);
+  useEffect(() => {
+    fetch("http://localhost:3310/api/accessories")
+      .then((res) => res.json())
+      .then((data) => {
+        console.info("Tout est OK Billy Boy", data);
+        setAccessories(data as AccessoryArray);
+      })
+      .catch((err) => console.error("Pas bon mon amis", err));
+  }, []);
 
-  // Step 5: create filter state
+  function handleSelectedChange(event: React.ChangeEvent<HTMLSelectElement>) {
+    const valueSelected = event.target.value;
+    setSelectedAccessory(valueSelected);
+  }
+  const [selectedAccessory, setSelectedAccessory] = useState("");
+
+  const filteredCupcakes =
+    selectedAccessory === ""
+      ? cupcakes
+      : cupcakes.filter((c) => c.accessory_id === selectedAccessory);
 
   return (
     <>
       <h1>My cupcakes</h1>
       <form className="center">
         <label htmlFor="cupcake-select">
-          {/* Step 5: use a controlled component for select */}
           Filter by{" "}
-          <select id="cupcake-select">
+          <select
+            id="cupcake-select"
+            value={selectedAccessory}
+            onChange={handleSelectedChange}
+          >
             <option value="">---</option>
-            {/* Step 4: add an option for each accessory */}
+            {accessories.map((accessory: Accessory) => (
+              <option key={accessory.id} value={accessory.id}>
+                {accessory.name}
+              </option>
+            ))}
           </select>
         </label>
       </form>
       <ul className="cupcake-list" id="cupcake-list">
-        {/* Step 2: repeat this block for each cupcake */}
-        {/* Step 5: filter cupcakes before repeating */}
+        {filteredCupcakes.map((cupcake) => (
+          <li key={cupcake.id} className="cupcake-item">
+            <Cupcake data={cupcake} />
+          </li>
+        ))}
         <li className="cupcake-item">
           <Cupcake data={sampleCupcakes[0]} />
         </li>
-        {/* end of block */}
       </ul>
     </>
   );
