@@ -12,7 +12,7 @@ Exemples :
 function countLetters(givenString: string, letter: string): number {
   return givenString
     .split("")
-    .reduce((total, current) => total + (current === letter), 0);
+    .filter((currentLetter) => currentLetter === letter).length;
 }
 
 export default countLetters;

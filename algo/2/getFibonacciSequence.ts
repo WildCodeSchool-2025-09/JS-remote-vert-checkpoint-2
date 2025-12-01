@@ -15,7 +15,7 @@ function getFibonacciSequence(size: number): number[] {
 
   if (size === 1) return [0];
 
-  let results = [0, 1];
+  const results = [0, 1];
 
   if (size === 2) return results;
 
