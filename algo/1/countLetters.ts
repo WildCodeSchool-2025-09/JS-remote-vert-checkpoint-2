@@ -48,12 +48,12 @@ La boucle for est basé sur la position index des éléments de la chaîne
 */
 
 function countLetters(givenString: string, letter: string): number {
-   let count = 0;
-   const lettermini = letter.toLowerCase();
-   const givenStringmini = givenString.toLowerCase();
-  for (const char of givenStringmini){
-    if ( char === lettermini){
-      count ++;
+  let count = 0;
+  const lettermini = letter.toLowerCase();
+  const givenStringmini = givenString.toLowerCase();
+  for (const char of givenStringmini) {
+    if (char === lettermini) {
+      count++;
     }
   }
   return count;

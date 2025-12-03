@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import Cupcake from "../components/Cupcake";
-
-/* ************************************************************************* */
+/* *************************************************************************
 const sampleCupcakes: CupcakeArray = [
   {
     id: 10,
@@ -30,13 +30,53 @@ const sampleCupcakes: CupcakeArray = [
     name: "Sweden",
   },
 ];
-
+ */
 /* you can use sampleCupcakes if you're stucked on step 1 */
 /* if you're fine with step 1, just ignore this ;) */
 /* ************************************************************************* */
+/*
+J'ai trouver sur internet comment fetch une app 
+J'ai coller un exemple ci dessous et j'ai ensuite importer useState et useEffect en haut de mon fichier 
+useEffect va contenir la fonction qui fait le fetch. / useState me servira à mettre à jour mon composant cupcake. 
+function RandomUserData() {
+    const [userData, setUserData] = useState(null);
 
+    useEffect(() => {
+        fetch('https://random-data-api.com/api/users/random_user')
+            .then(response => response.json())
+            .then(data => setUserData(data));
+    }, []);
+utiliser .map pour afficher la liste des cupcakes 
+exemple de map sur le net 
+                  {userList.map(user => (
+                    <li key={user.id}>
+                        <p>
+                            Name:
+                            {user.first_name}
+                            {user.last_name}
+                        </p>
+                        <p>
+                            Email:
+                            {user.email}
+                        </p>
+*/
+interface CupcakeType {
+  id: number;
+  name: string;
+  accessory_id: string;
+  accessory: string;
+  color1: string;
+  color2: string;
+  color3: string;
+}
 function CupcakeList() {
-  // Step 1: get all cupcakes
+  const [cupcakeList, setCupcakeList] = useState<CupcakeType[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3310/api/cupcakes")
+      .then((response) => response.json())
+      .then((data) => setCupcakeList(data));
+  }, []);
 
   // Step 3: get all accessories
 
@@ -47,24 +87,20 @@ function CupcakeList() {
       <h1>My cupcakes</h1>
       <form className="center">
         <label htmlFor="cupcake-select">
-          {/* Step 5: use a controlled component for select */}
           Filter by{" "}
           <select id="cupcake-select">
             <option value="">---</option>
-            {/* Step 4: add an option for each accessory */}
           </select>
         </label>
       </form>
       <ul className="cupcake-list" id="cupcake-list">
-        {/* Step 2: repeat this block for each cupcake */}
-        {/* Step 5: filter cupcakes before repeating */}
-        <li className="cupcake-item">
-          <Cupcake data={sampleCupcakes[0]} />
-        </li>
-        {/* end of block */}
+        {cupcakeList.map((cupcake) => (
+          <li key={cupcake.id} className="cupcake-item">
+            <Cupcake data={cupcake} />
+          </li>
+        ))}
       </ul>
     </>
   );
 }
-
 export default CupcakeList;
