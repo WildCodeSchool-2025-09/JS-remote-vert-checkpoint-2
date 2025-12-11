@@ -58,7 +58,7 @@ exemple de map sur le net
                         <p>
                             Email:
                             {user.email}
-                        </p>
+                        </p>git
 */
 interface CupcakeType {
   id: number;
@@ -103,9 +103,14 @@ function CupcakeList() {
       <form className="center">
         <label htmlFor="cupcake-select">
           Filter by{" "}
+          
           <select id="cupcake-select">
-            <option value="">---</option>
+             <option value="">---</option>
+            {accessories.map((accessory)=>(
+              <option key = {accessory.id} value={accessory.id}>{accessory.name}</option>
+            ))}
           </select>
+          
         </label>
       </form>
       <ul className="cupcake-list" id="cupcake-list">
