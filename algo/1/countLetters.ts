@@ -10,8 +10,17 @@ Exemples :
 */
 
 function countLetters(givenString: string, letter: string): number {
-  // Ton code ici !
-  return 0;
+  // Ma fonction attend en parametre 2 strings : givenString et letter. elle devra retourner un number
+  // givenString aura plein de lettres, et letter devra compter le nombre de cette lettre en particulier
+  // si aucune letter n'est dans la givenString, retourner 0
+
+  const givenLetters = givenString.split("");
+
+  const result = givenLetters.filter((t) => t === letter);
+
+  return result.length;
 }
+
+console.log(countLetters("fddaaaaaaabbbbb", "c"));
 
 export default countLetters;
