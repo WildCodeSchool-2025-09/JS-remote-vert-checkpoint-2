@@ -22,11 +22,8 @@ function getFibonacciSequence(size: number): number[] {
     const lastNumber = result[result.length - 1];
     const penultimateNumber = result[result.length - 2];
     const newLastNumber = lastNumber + penultimateNumber;
-
-
     result.push(newLastNumber);
   }
-
 
   return result;
 }
