@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Cupcake from "../components/Cupcake";
 
 function CupcakeList() {
@@ -48,7 +49,9 @@ function CupcakeList() {
       <ul className="cupcake-list" id="cupcake-list">
         {filteredCupcakes.map((cupcake) => (
           <li className="cupcake-item" key={cupcake.id}>
-            <Cupcake data={cupcake} />
+            <Link to={`/cupcakes/${cupcake.id}`}>
+              <Cupcake data={cupcake} />
+            </Link>
           </li>
         ))}
       </ul>
