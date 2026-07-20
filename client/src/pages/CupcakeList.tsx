@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import Cupcake from "../components/Cupcake";
 
+type AccessoryArray = {
+  id: number;
+  name: string;
+  slug: string;
+}[];
+
 function CupcakeList() {
   // Step 1: get all cupcakes
   const [cupcakes, setCupcakes] = useState<CupcakeArray>([]);
+  const [accessories, setAccessories] = useState<AccessoryArray>([]);
   useEffect(() => {
     const fetchCupcakes = async () => {
       const response = await fetch("http://localhost:3310/api/cupcakes");
@@ -22,7 +29,20 @@ function CupcakeList() {
   }, [cupcakes]);
 
   // Step 3: get all accessories
+  useEffect(() => {
+    const fetchAccessories = async () => {
+      const response = await fetch("http://localhost:3310/api/accessories");
+      const data = (await response.json()) as AccessoryArray;
 
+      setAccessories(data);
+      console.info(data);
+    };
+
+    fetchAccessories();
+  }, []);
+  useEffect(() => {
+    console.info(accessories);
+  }, [accessories]);
   // Step 5: create filter state
 
   return (
