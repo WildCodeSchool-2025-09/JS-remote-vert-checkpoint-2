@@ -14,6 +14,14 @@ function CupcakeList() {
 
   // Step 3: get all accessories
 
+  const [accessories, setAccessories] = useState<AccessoryArray>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3310/api/accessories")
+      .then((res) => res.json())
+      .then((data) => setAccessories(data));
+  }, []);
+
   // Step 5: create filter state
 
   return (
@@ -24,21 +32,21 @@ function CupcakeList() {
           {/* Step 5: use a controlled component for select */}
           Filter by{" "}
           <select id="cupcake-select">
-            <option value="">---</option>
-            {/* Step 4: add an option for each accessory */}
+            {accessories.map((accessory) => (
+              <option key={accessory.id} value={accessory.id}>
+                {accessory.name}
+              </option>
+            ))}
           </select>
         </label>
       </form>
       <ul className="cupcake-list" id="cupcake-list">
-        {/* Step 2: repeat this block for each cupcake */}
-        {cupcakes.map((cupcake) => {
+        {cupcakes.map((cupcake) => (
           /* Step 5: filter cupcakes before repeating */
-          return (
-            <li className="cupcake-item" key={cupcake.id}>
-              <Cupcake data={cupcake} />
-            </li>
-          );
-        })}
+          <li className="cupcake-item" key={cupcake.id}>
+            <Cupcake data={cupcake} />
+          </li>
+        ))}
       </ul>
     </>
   );
