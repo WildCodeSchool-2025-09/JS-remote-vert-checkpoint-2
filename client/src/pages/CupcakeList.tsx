@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Cupcake from "../components/Cupcake";
 
-/* ************************************************************************* */
 const sampleCupcakes: CupcakeArray = [
   {
     id: 10,
@@ -32,10 +31,6 @@ const sampleCupcakes: CupcakeArray = [
   },
 ];
 
-/* tu peux utiliser sampleCupcakes si tu bloques à l'étape 1 */
-/* si l'étape 1 est déjà faite, ignore simplement cette partie ;) */
-/* ************************************************************************* */
-
 function CupcakeList() {
   const [cupcakes, setCupcakes] = useState<CupcakeArray>([]);
 
@@ -48,9 +43,18 @@ function CupcakeList() {
       });
   }, []);
 
-  // Étape 3 : récupérer tous les accessoires
+  const [accessories, setAccessories] = useState<AccessoryArray>([]);
 
-  // Étape 5 : créer un état (state) pour le filtre
+  useEffect(() => {
+    fetch("http://localhost:3310/api/accessories")
+      .then((reponse) => reponse.json())
+      .then((data) => {
+        console.info(data);
+        setAccessories(data);
+      });
+  }, []);
+
+  // Etape 5 : creer un etat (state) pour le filtre
 
   return (
     <>
@@ -58,24 +62,23 @@ function CupcakeList() {
 
       <form className="center">
         <label htmlFor="cupcake-select">
-          {/* Étape 5 : utiliser un composant contrôlé pour le select */}
+          {/* Etape 5 : utiliser un composant controle pour le select */}
           Filter by{" "}
           <select id="cupcake-select">
             <option value="">---</option>
 
-            {/* Étape 4 : ajouter une option pour chaque accessoire */}
+            {/* Etape 4 : ajouter une option pour chaque accessoire */}
           </select>
         </label>
       </form>
 
       <ul className="cupcake-list" id="cupcake-list">
-        {/* Étape 2 : répéter ce bloc pour chaque cupcake */}
-
-        {/* Étape 5 : filtrer les cupcakes avant de les afficher */}
-        <li className="cupcake-item">
-          <Cupcake data={sampleCupcakes[0]} />
-        </li>
-
+        {cupcakes.map((cupcake) => (
+          <li key={cupcake.id} className="cupcake-item">
+            <Cupcake data={cupcake} />
+          </li>
+        ))}
+        {/* Etape 5 : filtrer les cupcakes avant de les afficher */}
         {/* fin du bloc */}
       </ul>
     </>
