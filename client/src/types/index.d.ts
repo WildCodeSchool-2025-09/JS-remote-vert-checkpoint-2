@@ -9,5 +9,4 @@ type Cupcake = {
 };
 
 type CupcakeArray = Cupcake[];
-
 type AccessoryArray = { id: number; name: string; slug: string }[];
