@@ -1,7 +1,7 @@
 import "./Cupcake.css";
 
 interface CupcakeProps {
-  data: Cupcake;
+  data: CupcakeType;
 }
 
 function Cupcake({ data }: CupcakeProps) {

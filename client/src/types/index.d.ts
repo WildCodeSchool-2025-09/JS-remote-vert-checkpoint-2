@@ -1,4 +1,4 @@
-type Cupcake = {
+type CupcakeType = {
   id: number;
   accessory_id: string;
   accessory: string;
@@ -8,4 +8,12 @@ type Cupcake = {
   name: string;
 };
 
-type CupcakeArray = Cupcake[];
+type CupcakeArray = CupcakeType[];
+
+interface AccessoryType {
+  id: number;
+  name: string;
+  slug: string;
+}
+
+type AccessoryArray = AccessoryType[];

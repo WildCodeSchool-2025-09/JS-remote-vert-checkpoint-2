@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import Cupcake from "../components/Cupcake";
+// import.meta.env.VITE_API_URL
 
 /* ************************************************************************* */
 const sampleCupcakes: CupcakeArray = [
@@ -38,9 +40,27 @@ const sampleCupcakes: CupcakeArray = [
 function CupcakeList() {
   // Step 1: get all cupcakes
 
+  const [cupcakes, setCupcakes] = useState<CupcakeArray>([]);
+  const [accessories, setAccessories] = useState<AccessoryArray>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3310/api/cupcakes")
+      .then((response) => response.json())
+      .then((data: CupcakeArray) => setCupcakes(data));
+  }, []);
+
   // Step 3: get all accessories
+  // fait un 2eme useEffect mais j'aurais surement dû faire un promise.all (manque de temps)
+
+  useEffect(() => {
+    fetch("http://localhost:3310/api/accessories")
+      .then((response) => response.json())
+      .then((data: AccessoryArray) => setAccessories(data));
+  }, []);
 
   // Step 5: create filter state
+
+  // const [filtered, setFiltered] = useState(false);
 
   return (
     <>
@@ -52,12 +72,23 @@ function CupcakeList() {
           <select id="cupcake-select">
             <option value="">---</option>
             {/* Step 4: add an option for each accessory */}
+            {accessories.map((accessory) => (
+              <option key={accessory.id} value={accessory.id}>
+                {accessory.name}
+              </option>
+            ))}
           </select>
         </label>
       </form>
+      {/* Step 2: repeat this block for each cupcake */}
       <ul className="cupcake-list" id="cupcake-list">
-        {/* Step 2: repeat this block for each cupcake */}
+        {cupcakes.map((cupcake) => (
+          <li key={cupcake.id} className="cupcake-item">
+            <Cupcake key={cupcake.id} data={cupcake} />
+          </li>
+        ))}
         {/* Step 5: filter cupcakes before repeating */}
+
         <li className="cupcake-item">
           <Cupcake data={sampleCupcakes[0]} />
         </li>
