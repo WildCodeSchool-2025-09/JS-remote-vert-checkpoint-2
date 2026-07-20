@@ -43,7 +43,10 @@ function CupcakeList() {
 
   useEffect(() => {
     const fetchCupcakes = async () => {
-      const response = await fetch("http://localhost:3310/api/cupcakes");
+      // const response = await fetch("http://localhost:3310/api/cupcakes");
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/cupcakes`,
+      );
       const data = await response.json();
       console.info(data);
       setCupcakes(data);
@@ -55,7 +58,10 @@ function CupcakeList() {
   const [accessories, setAccessories] = useState<AccessoryArray>([]);
   useEffect(() => {
     const fetchAccessories = async () => {
-      const response = await fetch("http://localhost:3310/api/accessories");
+      // const response = await fetch("http://localhost:3310/api/accessories");
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/accessories`,
+      );
       const data = await response.json();
       console.info(data);
       setAccessories(data);
