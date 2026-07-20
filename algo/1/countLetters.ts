@@ -1,17 +1,20 @@
-/*
-Créé une fonction countLetters qui compte, dans une string donnée, le nombre de fois qu'une lettre apparait.
+// Crée un compteur à 0.
 
-Exemples :
-* "" et "a" -> 0
-* "a" et "a" -> 1
-* "aaaaabbbaa" et "a" -> 7
-* "bbacbaaa" et "c" -> 1
-* "bbcc" et "a" -> 0
-*/
+// Parcourir les lettres une à une.
+
+// Trouvé si des lettres sont identiques.
+
+// additionner les lettres identiques
+
+// Retourner le total du compteur.
 
 function countLetters(givenString: string, letter: string): number {
-  // Ton code ici !
-  return 0;
+  let compteur = 0;
+  for (let i = 0; i < givenString.length; i++)
+    if (givenString[i] === letter) {
+      compteur++;
+    }
+  return compteur;
 }
 
 export default countLetters;
