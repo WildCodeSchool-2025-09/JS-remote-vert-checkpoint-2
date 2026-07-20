@@ -14,12 +14,17 @@ function getFibonacciSequence(size: number): number[] {
   if (size <= 0) {
     return [];
   }
+
+  if (size === 1) {
+    return [0];
+  }
+
   const table = [0, 1];
 
   while (table.length < size) {
     table.push(table[table.length - 1] + table[table.length - 2]);
   }
-  return table.slice(0, size);
+  return table;
 }
 
 export default getFibonacciSequence;
