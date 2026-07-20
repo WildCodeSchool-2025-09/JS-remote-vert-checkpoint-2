@@ -1,21 +1,25 @@
 import { useEffect, useState } from "react";
 import Cupcake from "../components/Cupcake";
 import.meta.env.VITE_API_URL;
-/* ************************************************************************* */
 
-/* you can use sampleCupcakes if you're stucked on step 1 */
-/* if you're fine with step 1, just ignore this ;) */
-/* ************************************************************************* */
-
+export interface CupcakeType {
+  id: number;
+  accessory_id: string;
+  accessory: string;
+  color1: string;
+  color2: string;
+  color3: string;
+  name: string;
+}
 
 function CupcakeList() {
   // Step 1: get all cupcakes
-  const [cupcakes, setCupcakes] = useState([]);
+  const [cupcakes, setCupcakes] = useState<CupcakeType[]>([]);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/cupcakes`)
       .then((response) => response.json())
-      .then((data) => setCupcakes(data));
+      .then((data: CupcakeType[]) => setCupcakes(data));
   }, []);
 
   // Step 3: get all accessories
@@ -37,10 +41,12 @@ function CupcakeList() {
       </form>
       <ul className="cupcake-list" id="cupcake-list">
         {/* Step 2: repeat this block for each cupcake */}
+        {cupcakes.map((cupcake) => (
+          <li className="cupcake-item" key={cupcake.id}>
+            <Cupcake data={cupcake} />
+          </li>
+        ))}
         {/* Step 5: filter cupcakes before repeating */}
-        <li className="cupcake-item">
-          <Cupcake data={cupcakes[0]} />
-        </li>
         {/* end of block */}
       </ul>
     </>
